@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:iam_app/components/myappbar.dart';
+import 'package:iam_app/components/event_card.dart';
 import 'package:iam_app/components/quick_access_icon.dart';
 
 class HomePage extends StatelessWidget {
@@ -43,6 +44,13 @@ class HomePage extends StatelessWidget {
                 ),
               ),
             ),
+            EventCard(
+            month: "JUN",
+            day: "15",
+            title: "Campanha de Doação",
+            location: "Shopping Center Norte",
+            time: "10h - 18h",
+          ),
           ],
         ),
       ),
