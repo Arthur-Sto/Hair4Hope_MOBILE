@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:iam_app/pages/home_page.dart';
+import 'package:iam_app/pages/main_page.dart';
 import 'package:iam_app/pages/welcome_page.dart';
 
 class AppWidget extends StatelessWidget {
@@ -10,13 +10,12 @@ class AppWidget extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        scaffoldBackgroundColor: Colors
-            .white, // Maneira correta de definir a cor de fundo
+        scaffoldBackgroundColor: Colors.white,
       ),
-      initialRoute: '/', // Inicia na WelcomePage
+      initialRoute: '/',
       routes: {
         '/': (context) => const WelcomePage(),
-        '/home': (context) => const HomePage(),
+        '/main': (context) => const MainPage(),
       },
     );
   }
