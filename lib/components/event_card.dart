@@ -43,7 +43,7 @@ class EventCard extends StatelessWidget {
               horizontal: 16,
             ),
             decoration: const BoxDecoration(
-              color: Color(0xFF9C6ADE), // Roxo
+              color: Color(0xFFEC2C8F), 
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(8),
                 bottomLeft: Radius.circular(8),

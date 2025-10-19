@@ -51,12 +51,7 @@ class DonationCard extends StatelessWidget {
                       vertical: 6,
                     ),
                 decoration: BoxDecoration(
-                  color: const Color.fromARGB(
-                    230,
-                    71,
-                    48,
-                    102,
-                  ),
+                  color: const Color.fromARGB(255, 173, 7, 93),
                   borderRadius:
                       BorderRadius.circular(5),
                 ),

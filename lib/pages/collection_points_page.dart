@@ -106,7 +106,9 @@ class _CollectionPointsPageState
   Widget _buildResults() {
     if (_isLoading) {
       return const Center(
-        child: CircularProgressIndicator(),
+        child: CircularProgressIndicator(color: const Color(
+                    0xFFEC2C8F,
+                  ), ),
       );
     }
 
@@ -295,8 +297,10 @@ class OngCard extends StatelessWidget {
                 Text(
                   '~$distance',
                   style: TextStyle(
-                    fontSize: 10,
-                    color: Colors.purple[400],
+                    fontSize: 12,
+                    color: const Color(
+                      0xFFEC2C8F,
+                    ),
                   ),
                 ),
               ],
@@ -321,7 +325,9 @@ class OngCard extends StatelessWidget {
               },
               child: const Text("Como chegar"),
               style: TextButton.styleFrom(
-                foregroundColor: Colors.purple,
+                foregroundColor: const Color(
+                  0xFFEC2C8F,
+                ),
               ),
             ),
           ],

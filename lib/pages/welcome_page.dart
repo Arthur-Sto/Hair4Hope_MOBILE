@@ -25,7 +25,7 @@ class WelcomePage extends StatelessWidget {
           children: <Widget>[
             const Spacer(flex: 1),
             Image.asset(
-              'assets/images/logo.png',
+              'assets/images/logo.webp',
               width: screenWidth * 0.6,
             ),
             const Spacer(flex: 2),
@@ -52,7 +52,7 @@ class WelcomePage extends StatelessWidget {
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(
-                    0xFFA575ED,
+                    0xFFEC2C8F,
                   ),
                   shape: RoundedRectangleBorder(
                     borderRadius:

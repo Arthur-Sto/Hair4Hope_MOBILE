@@ -58,8 +58,8 @@ class _MainPageState extends State<MainPage> {
         ],
         currentIndex: _selectedIndex,
         selectedItemColor: const Color(
-          0xFF9C6ADE,
-        ), // Cor roxa para o item selecionado
+          0xFFEC2C8F,
+        ),
         onTap: _onItemTapped,
       ),
     );

@@ -10,7 +10,7 @@ class QuickAccessIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CircleAvatar(
-      backgroundColor: const Color(0xFFA575ED),
+      backgroundColor: const Color(0xFFEC2C8F),
       radius: 30, 
       // O ícone que será exibido no centro.
       child: Icon(
