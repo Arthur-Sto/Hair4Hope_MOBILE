@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:iam_app/components/myappbar.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -106,9 +107,9 @@ class _CollectionPointsPageState
   Widget _buildResults() {
     if (_isLoading) {
       return const Center(
-        child: CircularProgressIndicator(color: const Color(
-                    0xFFEC2C8F,
-                  ), ),
+        child: CircularProgressIndicator(
+          color: const Color(0xFFEC2C8F),
+        ),
       );
     }
 
@@ -124,7 +125,8 @@ class _CollectionPointsPageState
     if (_pontosDeColeta.isEmpty) {
       return const Center(
         child: Text(
-          "Insira um CEP e número para encontrar locais próximos.",
+          "Insira um CEP e número para encontrar pontos de doação próximos.",
+          textAlign: TextAlign.center,
         ),
       );
     }
@@ -191,6 +193,15 @@ class SearchBar extends StatelessWidget {
                     controller: cepController,
                     onSubmitted: (_) =>
                         onSearch(),
+                    keyboardType:
+                        TextInputType.numberWithOptions(
+                          decimal: false,
+                        ),
+                    inputFormatters: [
+                      FilteringTextInputFormatter
+                          .digitsOnly,
+                    ],
+
                     decoration: InputDecoration(
                       hintText: 'Insira seu CEP',
                       hintStyle: TextStyle(
@@ -214,8 +225,14 @@ class SearchBar extends StatelessWidget {
                     controller: numeroController,
                     onSubmitted: (_) =>
                         onSearch(),
-                    keyboardType: TextInputType
-                        .number, // Teclado numérico
+                   keyboardType:
+                        TextInputType.numberWithOptions(
+                          decimal: false,
+                        ),
+                    inputFormatters: [
+                      FilteringTextInputFormatter
+                          .digitsOnly,
+                    ], // Teclado numérico
                     decoration: InputDecoration(
                       hintText: 'N°',
                       hintStyle: TextStyle(

@@ -41,26 +41,35 @@ class DonationCard extends StatelessWidget {
                 ),
               ),
             ),
-            Positioned(
-              top: 12,
-              left: 12,
-              child: Container(
-                padding:
-                    const EdgeInsets.symmetric(
-                      horizontal: 12,
-                      vertical: 6,
+            GestureDetector(
+              onTap: () {
+              },
+              child: Positioned(
+                top: 12,
+                left: 12,
+                child: Container(
+                  padding:
+                      const EdgeInsets.symmetric(
+                        horizontal: 12,
+                        vertical: 6,
+                      ),
+                  decoration: BoxDecoration(
+                    color: const Color.fromARGB(
+                      255,
+                      173,
+                      7,
+                      93,
                     ),
-                decoration: BoxDecoration(
-                  color: const Color.fromARGB(255, 173, 7, 93),
-                  borderRadius:
-                      BorderRadius.circular(5),
-                ),
-                child: const Text(
-                  "Ver amorímetro",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 10,
-                    fontWeight: FontWeight.bold,
+                    borderRadius:
+                        BorderRadius.circular(5),
+                  ),
+                  child: const Text(
+                    "Ver amorímetro",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 10,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
               ),
@@ -100,3 +109,18 @@ class DonationCard extends StatelessWidget {
     );
   }
 }
+
+// class AmorimetroPopUp extends StatelessWidget {
+//   const AmorimetroPopUp({super.key});
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return const PopupMenuItem(
+//       child: Column(
+//         children: [Text("Pessoas ajudadas!")],
+//       ),
+//     );
+//   }
+// }
+
+//arrumarisso

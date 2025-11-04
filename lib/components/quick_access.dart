@@ -92,7 +92,10 @@ class QuickAcess extends StatelessWidget {
             1, // Garante que o card seja sempre um quadrado
         child: Container(
           decoration: BoxDecoration(
-            color: const Color(0xFFF3E8FF),
+            // Sugestão: Usar uma cor que combine com o novo rosa
+            color: const Color(
+              0xFFFDE7F3,
+            ), // Um rosa bem claro
             borderRadius: BorderRadius.circular(
               10,
             ),
