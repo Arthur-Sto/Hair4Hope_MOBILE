@@ -62,7 +62,7 @@ class WelcomePage extends StatelessWidget {
                 onPressed: () {
                   Navigator.of(
                     context,
-                  ).pushReplacementNamed('/main');
+                  ).pushReplacementNamed('/presentation');
                 },
                 child: Text(
                   "Começar",
