@@ -14,21 +14,13 @@ class PresentationPage2 extends StatelessWidget {
         (screenWidth * 0.045).clamp(16.0, 20.0);
 
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        elevation: 0,
+        scrolledUnderElevation: 0,
+      ),
       body: Column(
         children: [
-          Row(
-            mainAxisAlignment:
-                MainAxisAlignment.end,
-            children: [
-              CloseButton(
-                onPressed: () {
-                  Navigator.of(
-                    context,
-                  ).pushReplacementNamed('/home');
-                },
-              ),
-            ],
-          ),
           Image.asset(
             'assets/images/logo.webp',
             width: screenWidth * 0.6,

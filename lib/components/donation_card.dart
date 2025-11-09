@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 class DonationCard extends StatelessWidget {
   const DonationCard({super.key});
@@ -54,7 +57,13 @@ class DonationCard extends StatelessWidget {
                 left: 12,
                 child: GestureDetector(
                   onTap: () {
-                    // Ação do botão aqui
+                    showDialog(
+                      context: context,
+                      builder:
+                          (BuildContext context) {
+                            return const AmorimetroPopUp();
+                          },         
+                    );
                   },
                   child: Container(
                     padding:
@@ -112,7 +121,7 @@ class DonationCard extends StatelessWidget {
                         color: Colors.white70,
                         fontSize: 12,
                       ),
-                    ),
+                    ),   
                   ],
                 ),
               ),
@@ -124,17 +133,84 @@ class DonationCard extends StatelessWidget {
   }
 }
 
-// class AmorimetroPopUp extends StatelessWidget {
-//   const AmorimetroPopUp({super.key});
+class AmorimetroPopUp extends StatelessWidget {
+  const AmorimetroPopUp({super.key});
 
-//   @override
-//   Widget build(BuildContext context) {
-//     return const PopupMenuItem(
-//       child: Column(
-//         children: [Text("Pessoas ajudadas!")],
-//       ),
-//     );
-//   }
-// }
+  @override
+  Widget build(BuildContext context) {
+    return SimpleDialog(
+      backgroundColor: const Color(
+              0xFFFDE7F3,
+            ),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(5),
+      ),
+      title: const Text(
+        'Amorímetro',
+        textAlign: TextAlign.center,
+        style: TextStyle(
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+      titlePadding: EdgeInsetsGeometry.only(top: 0),
+      children: [
+       FutureBuilder<String>(
+              future:
+                  getUrl(), 
+              builder: (context, snapshot) {
+                if (snapshot.connectionState ==
+                    ConnectionState.waiting) {
+                  return const CircularProgressIndicator(); 
+                } else if (snapshot.hasError) {
+                  return Text(
+                    'Erro: ${snapshot.error}',
+                  );
+                } else if (!snapshot.hasData) {
+                  return const Text(
+                    'Nenhuma imagem encontrada',
+                  );
+                } else {
+                  // quando terminar, mostra a imagem
+                  return Image.network(
+                    snapshot.data!,
+                  );
+                }
+              },
+        ),
+        Divider(),
+        Text(
+          'Nosso Amorímetro conta quantos Kits do Amor foram doados desde 08/03/2017',
+          textAlign: TextAlign.center,
+        ),
+        Divider(),
+      ],
+    );
+  }
+}
 
-//arrumarisso
+Future<String> getUrl() async {
+  final imageData = await fetch();
+  try {
+    return imageData['img'];
+  } catch (e) {
+    throw Exception('Erro ao buscar imagem: $e');
+  }
+}
+
+Future<Map<String, dynamic>> fetch() async {
+  var url = Uri.https(
+    'hair4hope-backend.onrender.com',
+    '/amorimetro',
+  );
+
+  var response = await http.get(url);
+  
+  if (response.statusCode == 200) {
+    return jsonDecode(response.body)
+        as Map<String, dynamic>;
+  } else {
+    throw Exception(
+      'Falha ao carregar dados. Status: ${response.statusCode}',
+    );
+  }
+}

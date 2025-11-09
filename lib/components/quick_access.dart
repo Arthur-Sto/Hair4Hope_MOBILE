@@ -86,13 +86,13 @@ class QuickAcess extends StatelessWidget {
       borderRadius: BorderRadius.circular(10),
       child: Container(
         height:
-            140, // Damos uma altura fixa para o card
-        child: Container( // O child original do AspectRatio
+            140, 
+        child: Container( 
           decoration: BoxDecoration(
-            // Sugestão: Usar uma cor que combine com o novo rosa
+            
             color: const Color(
               0xFFFDE7F3,
-            ), // Um rosa bem claro
+            ), 
             borderRadius: BorderRadius.circular(
               10,
             ),

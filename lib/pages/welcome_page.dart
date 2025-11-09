@@ -22,7 +22,20 @@ class WelcomePage extends StatelessWidget {
         child: Column(
           mainAxisAlignment:
               MainAxisAlignment.center,
-          children: <Widget>[
+          children: [
+            Row(
+            mainAxisAlignment:
+                MainAxisAlignment.end,
+            children: [
+              CloseButton(
+                onPressed: () {
+                  Navigator.of(
+                    context,
+                  ).pushReplacementNamed('/home');
+                },
+              ),
+            ],
+          ),
             const Spacer(flex: 1),
             Image.asset(
               'assets/images/logo.webp',

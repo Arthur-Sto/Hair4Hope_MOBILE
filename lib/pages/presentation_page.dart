@@ -75,7 +75,7 @@ class PresentationPage extends StatelessWidget {
               onPressed: () {
                 Navigator.of(
                   context,
-                ).pushReplacementNamed(
+                ).pushNamed(
                   '/presentation2',
                 );
               },
