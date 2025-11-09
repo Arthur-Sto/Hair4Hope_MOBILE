@@ -1,6 +1,6 @@
-# iam_app
+# Instituto Amor em Mechas APP
 
-A new Flutter project.
+Este é o repositorio de um projeto flutter que estamos desenvolvendo para ONG Instituto Amor em Mechas.
 
 ## Getting Started
 
