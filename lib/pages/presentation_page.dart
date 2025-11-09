@@ -24,7 +24,7 @@ class PresentationPage extends StatelessWidget {
                 onPressed: () {
                   Navigator.of(
                     context,
-                  ).pushReplacementNamed('/main');
+                  ).pushReplacementNamed('/home');
                 },
               ),
             ],

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:iam_app/components/myappbar.dart';
+import 'package:iam_app/components/my_bottom_nav_bar.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class CollectionPointsPage
@@ -27,7 +28,7 @@ class _CollectionPointsPageState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MyAppBar(
+      appBar: const MyAppBar(
         titleText: 'Pontos de Coleta',
       ),
       body: Padding(
@@ -43,6 +44,10 @@ class _CollectionPointsPageState
             Expanded(child: _buildResults()),
           ],
         ),
+      ),
+      bottomNavigationBar: const MyBottomNavBar(
+        currentIndex:
+            0, // Esta é a página de Mapa (índice 0)
       ),
     );
   }
@@ -108,7 +113,7 @@ class _CollectionPointsPageState
     if (_isLoading) {
       return const Center(
         child: CircularProgressIndicator(
-          color: const Color(0xFFEC2C8F),
+          color: Color(0xFFEC2C8F),
         ),
       );
     }
@@ -166,98 +171,85 @@ class SearchBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Column(
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(16.0),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withAlpha(
+              38,
+            ), // 0.15 * 255 = 38.25
+            blurRadius: 6,
+            offset: const Offset(0, 3),
+          ),
+        ],
+      ),
+      child: Row(
         children: [
-          Container(
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(
-                16.0,
+          Expanded(
+            flex: 3, // Ocupa 3/4 do espaço
+            child: TextField(
+              controller: cepController,
+              onSubmitted: (_) => onSearch(),
+              keyboardType:
+                  TextInputType.numberWithOptions(
+                    decimal: false,
+                  ),
+              inputFormatters: [
+                FilteringTextInputFormatter
+                    .digitsOnly,
+              ],
+              decoration: InputDecoration(
+                hintText: 'Insira seu CEP',
+                hintStyle: TextStyle(
+                  color: Colors.grey.shade600,
+                  fontSize: 12.0,
+                ),
+                border: InputBorder.none,
+                contentPadding:
+                    const EdgeInsets.symmetric(
+                      vertical: 14.0,
+                      horizontal: 16.0,
+                    ),
               ),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(
-                    0.15,
-                  ),
-                  blurRadius: 6,
-                  offset: const Offset(0, 3),
-                ),
-              ],
             ),
-            child: Row(
-              children: [
-                Expanded(
-                  flex: 3, // Ocupa 3/4 do espaço
-                  child: TextField(
-                    controller: cepController,
-                    onSubmitted: (_) =>
-                        onSearch(),
-                    keyboardType:
-                        TextInputType.numberWithOptions(
-                          decimal: false,
-                        ),
-                    inputFormatters: [
-                      FilteringTextInputFormatter
-                          .digitsOnly,
-                    ],
-
-                    decoration: InputDecoration(
-                      hintText: 'Insira seu CEP',
-                      hintStyle: TextStyle(
-                        color:
-                            Colors.grey.shade600,
-                        fontSize: 12.0,
-                      ),
-                      border: InputBorder.none,
-                      contentPadding:
-                          const EdgeInsets.symmetric(
-                            vertical: 14.0,
-                            horizontal: 16.0,
-                          ),
+          ),
+          const SizedBox(width: 10),
+          Expanded(
+            flex: 1, // Ocupa 1/4 do espaço
+            child: TextField(
+              controller: numeroController,
+              onSubmitted: (_) => onSearch(),
+              keyboardType:
+                  TextInputType.numberWithOptions(
+                    decimal: false,
+                  ),
+              inputFormatters: [
+                FilteringTextInputFormatter
+                    .digitsOnly,
+              ], // Teclado numérico
+              decoration: InputDecoration(
+                hintText: 'N°',
+                hintStyle: TextStyle(
+                  color: Colors.grey.shade600,
+                  fontSize: 12.0,
+                ),
+                border: InputBorder.none,
+                contentPadding:
+                    const EdgeInsets.symmetric(
+                      vertical: 14.0,
+                      horizontal: 10.0,
                     ),
-                  ),
-                ),
-                const SizedBox(width: 10),
-                Expanded(
-                  flex: 1, // Ocupa 1/4 do espaço
-                  child: TextField(
-                    controller: numeroController,
-                    onSubmitted: (_) =>
-                        onSearch(),
-                   keyboardType:
-                        TextInputType.numberWithOptions(
-                          decimal: false,
-                        ),
-                    inputFormatters: [
-                      FilteringTextInputFormatter
-                          .digitsOnly,
-                    ], // Teclado numérico
-                    decoration: InputDecoration(
-                      hintText: 'N°',
-                      hintStyle: TextStyle(
-                        color:
-                            Colors.grey.shade600,
-                        fontSize: 12.0,
-                      ),
-                      border: InputBorder.none,
-                      contentPadding:
-                          const EdgeInsets.symmetric(
-                            vertical: 14.0,
-                            horizontal: 10.0,
-                          ),
-                    ),
-                  ),
-                ),
-                IconButton(
-                  icon: Icon(
-                    Icons.search,
-                    color: Colors.grey.shade600,
-                  ),
-                  onPressed: onSearch,
-                ),
-              ],
+              ),
             ),
+          ),
+          IconButton(
+            icon: Icon(
+              Icons.search,
+              color: Colors.grey.shade600,
+            ),
+            onPressed: onSearch,
           ),
         ],
       ),
@@ -299,14 +291,13 @@ class OngCard extends StatelessWidget {
               crossAxisAlignment:
                   CrossAxisAlignment.start,
               children: [
-                Expanded(
+                Flexible(
                   child: Text(
                     title,
                     style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
                     ),
-                    maxLines: 1,
                     overflow:
                         TextOverflow.ellipsis,
                   ),
@@ -315,9 +306,7 @@ class OngCard extends StatelessWidget {
                   '~$distance',
                   style: TextStyle(
                     fontSize: 12,
-                    color: const Color(
-                      0xFFEC2C8F,
-                    ),
+                    color: Color(0xFFEC2C8F),
                   ),
                 ),
               ],
@@ -340,12 +329,12 @@ class OngCard extends StatelessWidget {
                   }
                 }
               },
-              child: const Text("Como chegar"),
               style: TextButton.styleFrom(
                 foregroundColor: const Color(
                   0xFFEC2C8F,
                 ),
               ),
+              child: const Text("Como chegar"),
             ),
           ],
         ),

@@ -2,13 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:iam_app/components/quick_access_icon.dart';
 
 class QuickAcess extends StatelessWidget {
-  final Function(int index) onNavigate;
-
-  const QuickAcess({
-    super.key,
-    required this.onNavigate,
-  });
-
+  const QuickAcess({super.key});
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -17,14 +11,18 @@ class QuickAcess extends StatelessWidget {
           context,
           icon1: Icons.location_on_outlined,
           text1: 'Pontos de Coleta',
-          onTap1: () => onNavigate(
-            0,
-          ), // Navega para o índice 0
+          onTap1: () =>
+              Navigator.pushReplacementNamed(
+                context,
+                '/collection_points',
+              ),
           icon2: Icons.volunteer_activism,
           text2: 'Galeria da Superação',
-          onTap2: () => onNavigate(
-            2,
-          ), // Navega para o índice 2
+          onTap2: () =>
+              Navigator.pushReplacementNamed(
+                context,
+                '/gallery',
+              ),
         ),
         const SizedBox(height: 15),
         _buildQuickAccessRow(
@@ -56,7 +54,7 @@ class QuickAcess extends StatelessWidget {
     return Row(
       children: [
         const Spacer(flex: 1),
-        Flexible(
+        Expanded(
           flex: 8,
           child: _buildQuickAccessCard(
             icon: icon1,
@@ -65,7 +63,7 @@ class QuickAcess extends StatelessWidget {
           ),
         ),
         const SizedBox(width: 15),
-        Flexible(
+        Expanded(
           flex: 8,
           child: _buildQuickAccessCard(
             icon: icon2,
@@ -86,11 +84,10 @@ class QuickAcess extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       borderRadius: BorderRadius.circular(10),
-      child: AspectRatio(
-        aspectRatio:
-            1 /
-            1, // Garante que o card seja sempre um quadrado
-        child: Container(
+      child: Container(
+        height:
+            140, // Damos uma altura fixa para o card
+        child: Container( // O child original do AspectRatio
           decoration: BoxDecoration(
             // Sugestão: Usar uma cor que combine com o novo rosa
             color: const Color(
@@ -101,9 +98,7 @@ class QuickAcess extends StatelessWidget {
             ),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(
-                  0.1,
-                ),
+                color: Colors.black.withAlpha(26), // 0.1 * 255 = 25.5
                 spreadRadius: 1,
                 blurRadius: 5,
                 offset: const Offset(0, 3),
