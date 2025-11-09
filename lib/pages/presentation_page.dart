@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:iam_app/components/confirm_pop_up.dart';
 
 class PresentationPage extends StatelessWidget {
   const PresentationPage({super.key});
@@ -22,9 +23,12 @@ class PresentationPage extends StatelessWidget {
             children: [
               CloseButton(
                 onPressed: () {
-                  Navigator.of(
-                    context,
-                  ).pushReplacementNamed('/home');
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return const ConfirmPopUp();
+                    },
+                  );
                 },
               ),
             ],
@@ -75,9 +79,7 @@ class PresentationPage extends StatelessWidget {
               onPressed: () {
                 Navigator.of(
                   context,
-                ).pushNamed(
-                  '/presentation2',
-                );
+                ).pushNamed('/presentation2');
               },
               child: Text(
                 "Prosseguir",

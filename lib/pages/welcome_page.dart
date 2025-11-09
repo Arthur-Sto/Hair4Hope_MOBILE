@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:iam_app/components/confirm_pop_up.dart';
 
 class WelcomePage extends StatelessWidget {
   const WelcomePage({super.key});
@@ -24,18 +25,21 @@ class WelcomePage extends StatelessWidget {
               MainAxisAlignment.center,
           children: [
             Row(
-            mainAxisAlignment:
-                MainAxisAlignment.end,
-            children: [
-              CloseButton(
-                onPressed: () {
-                  Navigator.of(
-                    context,
-                  ).pushReplacementNamed('/home');
-                },
-              ),
-            ],
-          ),
+              mainAxisAlignment:
+                  MainAxisAlignment.end,
+              children: [
+                CloseButton(
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return const ConfirmPopUp();
+                      },
+                    );
+                  },
+                ),
+              ],
+            ),
             const Spacer(flex: 1),
             Image.asset(
               'assets/images/logo.webp',
@@ -75,7 +79,9 @@ class WelcomePage extends StatelessWidget {
                 onPressed: () {
                   Navigator.of(
                     context,
-                  ).pushReplacementNamed('/presentation');
+                  ).pushReplacementNamed(
+                    '/presentation',
+                  );
                 },
                 child: Text(
                   "Começar",
@@ -93,3 +99,5 @@ class WelcomePage extends StatelessWidget {
     );
   }
 }
+
+
