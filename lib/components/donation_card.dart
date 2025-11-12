@@ -55,7 +55,7 @@ class DonationCard extends StatelessWidget {
               Positioned(
                 top: 12,
                 left: 12,
-                child: GestureDetector(
+                child: InkWell(
                   onTap: () {
                     showDialog(
                       context: context,
