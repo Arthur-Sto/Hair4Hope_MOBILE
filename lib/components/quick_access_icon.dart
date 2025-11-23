@@ -12,7 +12,6 @@ class QuickAccessIcon extends StatelessWidget {
     return CircleAvatar(
       backgroundColor: const Color(0xFFEC2C8F),
       radius: 30, 
-      // O ícone que será exibido no centro.
       child: Icon(
         icon, 
         color: Colors.white,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:iam_app/components/quick_access_icon.dart';
+import 'package:iam_app/components/underdev_pop_up.dart';
 
 class QuickAcess extends StatelessWidget {
   const QuickAcess({super.key});
@@ -30,7 +31,12 @@ class QuickAcess extends StatelessWidget {
           icon1: Icons.monetization_on_outlined,
           text1: 'Doar Dinheiro',
           onTap1: () {
-            // Ação para Doar Dinheiro
+            showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return const UnderDevPopUp();
+              },
+            );
           },
           icon2: Icons.handshake_outlined,
           text2: 'Voluntariado',

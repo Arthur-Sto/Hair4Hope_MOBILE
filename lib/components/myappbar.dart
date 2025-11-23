@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:iam_app/components/UnderDev_pop_up.dart';
 
 class MyAppBar extends StatelessWidget
     implements PreferredSizeWidget {
@@ -44,7 +45,14 @@ class MyAppBar extends StatelessWidget
             Icons.person_outline,
             color: Colors.black87,
           ),
-          onPressed: () {},
+          onPressed: () {
+            showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return const UnderDevPopUp();
+              },
+            );
+          },
         ),
         IconButton(
           iconSize: responsiveIconSize,
@@ -52,7 +60,14 @@ class MyAppBar extends StatelessWidget
             Icons.settings_outlined,
             color: Colors.black87,
           ),
-          onPressed: () {},
+          onPressed: () {
+            showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return const UnderDevPopUp();
+              },
+            );
+          },
         ),
       ],
     );
