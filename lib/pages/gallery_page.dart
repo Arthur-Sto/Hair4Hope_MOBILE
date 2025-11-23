@@ -27,7 +27,8 @@ class _GalleryPageState
       body: Padding(
         padding: const EdgeInsets.all(10.0),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start, // Alinha os filhos à esquerda
+          crossAxisAlignment: CrossAxisAlignment
+              .start, // Alinha os filhos à esquerda
           children: [
             ToggleAllOrEvent(
               isSelected: isSelected,
@@ -43,11 +44,15 @@ class _GalleryPageState
                 });
               },
             ),
-            const SizedBox(
-              height: 20,
-            ), 
+            const SizedBox(height: 20),
             Expanded(
-              child: isSelected[0] ? const GalleryGrid(filterEvents: false) : const GalleryGrid(filterEvents: true),
+              child: isSelected[0]
+                  ? const GalleryGrid(
+                      filterEvents: false,
+                    )
+                  : const GalleryGrid(
+                      filterEvents: true,
+                    ),
             ),
           ],
         ),
@@ -58,7 +63,6 @@ class _GalleryPageState
     );
   }
 }
-
 
 class GalleryItem {
   final String id;
@@ -75,29 +79,38 @@ class GalleryItem {
     required this.isEvento,
   });
 
-  factory GalleryItem.fromJson(Map<String, dynamic> json) {
+  factory GalleryItem.fromJson(
+    Map<String, dynamic> json,
+  ) {
     return GalleryItem(
       id: (json['_id'] ?? 0).toString(),
       titulo: json['titulo'] ?? '',
       desc: json['desc'] ?? '',
-      images: List<String>.from(json['images'] ?? []),
+      images: List<String>.from(
+        json['images'] ?? [],
+      ),
       isEvento: json['is_evento'] ?? false,
     );
   }
 }
 
 // ---------------------------------------------------------------------------
-// WIDGET DA GALERIA 
+// WIDGET DA GALERIA
 // ---------------------------------------------------------------------------
 class GalleryGrid extends StatefulWidget {
   final bool filterEvents;
-  const GalleryGrid({super.key, required this.filterEvents});
+  const GalleryGrid({
+    super.key,
+    required this.filterEvents,
+  });
 
   @override
-  State<GalleryGrid> createState() => _GalleryGridState();
+  State<GalleryGrid> createState() =>
+      _GalleryGridState();
 }
 
-class _GalleryGridState extends State<GalleryGrid> {
+class _GalleryGridState
+    extends State<GalleryGrid> {
   List<GalleryItem> _allItems = [];
   bool _isLoading = true;
   String? _errorMessage;
@@ -109,56 +122,92 @@ class _GalleryGridState extends State<GalleryGrid> {
   }
 
   Future<void> _fetchGalleryData() async {
-    const String apiUrl = 'https://hair4hope-backend.onrender.com/galeria/';
+    const String apiUrl =
+        'https://hair4hope-backend.onrender.com/galeria/';
     try {
-      final response = await http.get(Uri.parse(apiUrl));
+      final response = await http.get(
+        Uri.parse(apiUrl),
+      );
       if (response.statusCode == 200) {
-        final List<dynamic> data = json.decode(response.body);
+        final List<dynamic> data = json.decode(
+          response.body,
+        );
         if (mounted) {
           setState(() {
-            _allItems = data.map((json) => GalleryItem.fromJson(json)).toList();
+            _allItems = data
+                .map(
+                  (json) =>
+                      GalleryItem.fromJson(json),
+                )
+                .toList();
             _isLoading = false;
           });
         }
       } else {
-        throw Exception('Falha ao carregar: ${response.statusCode}');
+        throw Exception(
+          'Falha ao carregar: ${response.statusCode}',
+        );
       }
     } catch (e) {
       debugPrint('Erro na API: $e');
       if (mounted) {
         setState(() {
           _isLoading = false;
-          _errorMessage = "Erro ao carregar a galeria.";
+          _errorMessage =
+              "Erro ao carregar a galeria.";
         });
       }
     }
   }
 
   Widget _buildImageCard(GalleryItem item) {
-    final String imageUrl = item.images.isNotEmpty ? item.images.first : 'https://via.placeholder.com/300x400';
+    final String imageUrl = item.images.isNotEmpty
+        ? item.images.first
+        : 'https://via.placeholder.com/300x400';
 
     return GestureDetector(
       onTap: () {
-        // TODO: Implementar navegação para tela de detalhes
-        debugPrint('Clicou em: ${item.titulo}');
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return MoreInfoPopUp(
+              img: item.images,
+              title: item.titulo,
+              desc: item.desc,
+            );
+          },
+        );
+        // debugPrint('Clicou em: ${item.images}');
       },
       child: ClipRRect(
         borderRadius: BorderRadius.circular(16),
         child: Image.network(
           imageUrl,
           fit: BoxFit.cover,
-          loadingBuilder: (context, child, loadingProgress) {
-            if (loadingProgress == null) return child;
-            return Container(
-              color: Colors.grey[200],
-              child: const Center(child: Icon(Icons.image, color: Colors.grey)),
-            );
-          },
-          errorBuilder: (context, error, stackTrace) => Container(
-            color: Colors.grey[200],
-            alignment: Alignment.center,
-            child: const Icon(Icons.broken_image, color: Colors.grey),
-          ),
+          loadingBuilder:
+              (context, child, loadingProgress) {
+                if (loadingProgress == null)
+                  return child;
+                return Container(
+                  color: Colors.grey[200],
+                  child: const Center(
+                    child: Icon(
+                      Icons.image,
+                      color: Colors.grey,
+                    ),
+                  ),
+                );
+              },
+          errorBuilder:
+              (context, error, stackTrace) =>
+                  Container(
+                    color: Colors.grey[200],
+                    alignment: Alignment.center,
+                    child: const Icon(
+                      Icons.broken_image,
+                      color: Colors.grey,
+                    ),
+                  ),
         ),
       ),
     );
@@ -167,32 +216,48 @@ class _GalleryGridState extends State<GalleryGrid> {
   @override
   Widget build(BuildContext context) {
     if (_isLoading) {
-      return const Center(child: CircularProgressIndicator(color: Color(0xFFEC2C8F)));
+      return const Center(
+        child: CircularProgressIndicator(
+          color: Color(0xFFEC2C8F),
+        ),
+      );
     }
 
     if (_errorMessage != null) {
       return Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment:
+              MainAxisAlignment.center,
           children: [
-            const Icon(Icons.error_outline, size: 48, color: Colors.red),
+            const Icon(
+              Icons.error_outline,
+              size: 48,
+              color: Colors.red,
+            ),
             const SizedBox(height: 10),
             Text(_errorMessage!),
             TextButton(
               onPressed: _fetchGalleryData,
-              child: const Text('Tentar novamente'),
+              child: const Text(
+                'Tentar novamente',
+              ),
             ),
           ],
         ),
       );
     }
 
-    final List<GalleryItem> displayedItems = widget.filterEvents
-        ? _allItems.where((item) => item.isEvento).toList()
+    final List<GalleryItem> displayedItems =
+        widget.filterEvents
+        ? _allItems
+              .where((item) => item.isEvento)
+              .toList()
         : _allItems;
 
     if (displayedItems.isEmpty) {
-      return const Center(child: Text('Nenhum item encontrado.'));
+      return const Center(
+        child: Text('Nenhum item encontrado.'),
+      );
     }
 
     return MasonryGridView.count(
@@ -252,6 +317,46 @@ class ToggleAllOrEventState
           ),
           child: Text('Eventos'),
         ),
+      ],
+    );
+  }
+}
+
+class MoreInfoPopUp extends StatelessWidget {
+  final String title;
+  final String desc;
+  final List<String> img;
+  const MoreInfoPopUp({
+    super.key,
+    required this.img,
+    required this.title,
+    required this.desc,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return SimpleDialog(
+      backgroundColor: const Color(0xFFFDE7F3),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(5),
+      ),
+      title: Text(
+        title,
+        textAlign: TextAlign.center,
+        style: TextStyle(
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+      titlePadding: EdgeInsetsGeometry.only(
+        top: 0,
+      ),
+      children: [
+        Image.network(
+          img[0], 
+          fit: BoxFit.cover,
+          ),
+        Divider(),
+        Text(desc, textAlign: TextAlign.center),
       ],
     );
   }

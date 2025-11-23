@@ -28,7 +28,6 @@ class DonationCard extends StatelessWidget {
           height: 180,
           child: Stack(
             children: [
-              // Imagem de fundo (assets)
               Image.asset(
                 "assets/images/fotohome.webp",
                 fit: BoxFit.cover,
@@ -160,7 +159,20 @@ class AmorimetroPopUp extends StatelessWidget {
               builder: (context, snapshot) {
                 if (snapshot.connectionState ==
                     ConnectionState.waiting) {
-                  return const CircularProgressIndicator(); 
+                  // return const CircularProgressIndicator(); 
+                  return Column(
+                    children: [
+                      Image.network('https://img1.wsimg.com/isteam/ip/fa410d90-5d99-4398-b8ed-dfe92b942853/amorimetro%20site%20(1)-373b361.png',
+                  ),
+                  Text(
+                    'Atualizando...',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: Colors.grey
+                    ),
+                  ),
+                    ],
+                  );
                 } else if (snapshot.hasError) {
                   return Text(
                     'Erro: ${snapshot.error}',
@@ -170,7 +182,6 @@ class AmorimetroPopUp extends StatelessWidget {
                     'Nenhuma imagem encontrada',
                   );
                 } else {
-                  // quando terminar, mostra a imagem
                   return Image.network(
                     snapshot.data!,
                   );
