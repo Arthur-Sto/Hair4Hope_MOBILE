@@ -70,6 +70,9 @@ class GalleryItem {
   final String desc;
   final List<String> images;
   final bool isEvento;
+  final String endereco;
+  final String horario;
+  final String data;
 
   GalleryItem({
     required this.id,
@@ -77,6 +80,9 @@ class GalleryItem {
     required this.desc,
     required this.images,
     required this.isEvento,
+    required this.endereco,
+    required this.horario,
+    required this.data,
   });
 
   factory GalleryItem.fromJson(
@@ -90,6 +96,9 @@ class GalleryItem {
         json['images'] ?? [],
       ),
       isEvento: json['is_evento'] ?? false,
+      endereco: json['endereco'] ?? '',
+      horario: json['horario_evento'] ?? '',
+      data: json['data_evento'] ?? '',
     );
   }
 }
@@ -174,6 +183,10 @@ class _GalleryGridState
               img: item.images,
               title: item.titulo,
               desc: item.desc,
+              isEvento: item.isEvento,
+              endereco: item.endereco,
+              horario: item.horario,
+              data: item.data,
             );
           },
         );
@@ -326,37 +339,82 @@ class MoreInfoPopUp extends StatelessWidget {
   final String title;
   final String desc;
   final List<String> img;
+  final bool isEvento;
+  final String endereco;
+  final String horario;
+  final String data;
+
   const MoreInfoPopUp({
     super.key,
     required this.img,
     required this.title,
     required this.desc,
+    required this.isEvento,
+    required this.endereco,
+    required this.horario,
+    required this.data,
   });
 
   @override
   Widget build(BuildContext context) {
     return SimpleDialog(
-      backgroundColor: const Color(0xFFFDE7F3),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(5),
+      contentPadding: EdgeInsets.zero,
+      backgroundColor: const Color.fromARGB(
+        255,
+        255,
+        255,
+        255,
       ),
-      title: Text(
-        title,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(13),
+      ),
+      title: const Text(
+        "Galeria da Superação",
         textAlign: TextAlign.center,
         style: TextStyle(
           fontWeight: FontWeight.bold,
         ),
       ),
-      titlePadding: EdgeInsetsGeometry.only(
-        top: 0,
-      ),
+      titlePadding: const EdgeInsets.all(6),
       children: [
-        Image.network(
-          img[0], 
-          fit: BoxFit.cover,
+        ClipRect(
+          child: Image.network(
+            img[0],
+            fit: BoxFit.cover,
           ),
-        Divider(),
-        Text(desc, textAlign: TextAlign.center),
+        ),
+        // Divider(),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            crossAxisAlignment:
+                CrossAxisAlignment.start,
+            children: [
+              Text(
+                title,
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 15,
+                ),
+              ),
+              Text(
+                desc,
+                style: const TextStyle(
+                  fontSize: 12,
+                ),
+              ),
+              isEvento
+              ? Text(
+                '\n$endereco, $data - $horario',
+                style: const TextStyle(
+                  fontSize: 12,
+                  fontStyle: FontStyle.italic,
+                ),
+              )
+              : const SizedBox.shrink(),
+            ],
+          ),
+        ),
       ],
     );
   }

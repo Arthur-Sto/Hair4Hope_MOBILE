@@ -16,18 +16,11 @@ class WelcomePage extends StatelessWidget {
     final double buttonFontSize =
         (screenWidth * 0.045).clamp(16.0, 20.0);
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: 24.0,
-        ),
-        child: Column(
-          mainAxisAlignment:
-              MainAxisAlignment.center,
-          children: [
-            Row(
-              mainAxisAlignment:
-                  MainAxisAlignment.end,
-              children: [
+      appBar:AppBar(
+        backgroundColor: Colors.white,
+        elevation: 0,
+        scrolledUnderElevation: 0,
+        actions: [
                 CloseButton(
                   onPressed: () {
                     showDialog(
@@ -38,8 +31,16 @@ class WelcomePage extends StatelessWidget {
                     );
                   },
                 ),
-              ],
-            ),
+                ],
+      ),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(
+          horizontal: 24.0,
+        ),
+        child: Column(
+          mainAxisAlignment:
+              MainAxisAlignment.center,
+          children: [
             const Spacer(flex: 1),
             Image.asset(
               'assets/images/logo.webp',
@@ -79,7 +80,7 @@ class WelcomePage extends StatelessWidget {
                 onPressed: () {
                   Navigator.of(
                     context,
-                  ).pushReplacementNamed(
+                  ).pushNamed(
                     '/presentation',
                   );
                 },

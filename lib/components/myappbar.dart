@@ -42,6 +42,26 @@ class MyAppBar extends StatelessWidget
         IconButton(
           iconSize: responsiveIconSize,
           icon: const Icon(
+            Icons.help_outline,
+            color: Colors.black87,
+          ),
+          onPressed: () {
+            switch (titleText) {
+              case 'Início':
+                print(titleText);
+                break;
+              case 'Pontos de Coleta':
+               print(titleText);
+                break;
+              case 'Galeria da Superação':
+                print(titleText);
+                break;
+            }
+          },
+        ),
+        IconButton(
+          iconSize: responsiveIconSize,
+          icon: const Icon(
             Icons.person_outline,
             color: Colors.black87,
           ),

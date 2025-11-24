@@ -15,24 +15,25 @@ class PresentationPage extends StatelessWidget {
         (screenWidth * 0.045).clamp(16.0, 20.0);
 
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        elevation: 0,
+        scrolledUnderElevation: 0,
+        actions: [
+          CloseButton(
+            onPressed: () {
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return const ConfirmPopUp();
+                },
+              );
+            },
+          ),
+        ],
+      ),
       body: Column(
         children: [
-          Row(
-            mainAxisAlignment:
-                MainAxisAlignment.end,
-            children: [
-              CloseButton(
-                onPressed: () {
-                  showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return const ConfirmPopUp();
-                    },
-                  );
-                },
-              ),
-            ],
-          ),
           Image.asset(
             'assets/images/logo.webp',
             width: screenWidth * 0.6,
