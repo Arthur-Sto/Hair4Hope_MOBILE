@@ -64,6 +64,7 @@ class _GalleryPageState
   }
 }
 
+//-----
 class GalleryItem {
   final String id;
   final String titulo;
@@ -103,6 +104,7 @@ class GalleryItem {
   }
 }
 
+//------
 // ---------------------------------------------------------------------------
 // WIDGET DA GALERIA
 // ---------------------------------------------------------------------------
@@ -130,6 +132,7 @@ class _GalleryGridState
     _fetchGalleryData();
   }
 
+  //-------
   Future<void> _fetchGalleryData() async {
     const String apiUrl =
         'https://hair4hope-backend.onrender.com/galeria/';
@@ -169,6 +172,7 @@ class _GalleryGridState
     }
   }
 
+  //-------
   Widget _buildImageCard(GalleryItem item) {
     final String imageUrl = item.images.isNotEmpty
         ? item.images.first
@@ -273,15 +277,19 @@ class _GalleryGridState
       );
     }
 
-    return MasonryGridView.count(
-      crossAxisCount: 2,
-      mainAxisSpacing: 8,
-      crossAxisSpacing: 8,
-      itemCount: displayedItems.length,
-      itemBuilder: (context, index) {
-        final item = displayedItems[index];
-        return _buildImageCard(item);
-      },
+    return RefreshIndicator(
+      onRefresh: _fetchGalleryData,
+      color: const Color(0xFFEC2C8F),
+      child: MasonryGridView.count(
+        crossAxisCount: 2,
+        mainAxisSpacing: 8,
+        crossAxisSpacing: 8,
+        itemCount: displayedItems.length,
+        itemBuilder: (context, index) {
+          final item = displayedItems[index];
+          return _buildImageCard(item);
+        },
+      ),
     );
   }
 }
@@ -403,15 +411,16 @@ class MoreInfoPopUp extends StatelessWidget {
                   fontSize: 12,
                 ),
               ),
-              isEvento
-              ? Text(
-                '\n$endereco, $data - $horario',
-                style: const TextStyle(
-                  fontSize: 12,
-                  fontStyle: FontStyle.italic,
-                ),
-              )
-              : const SizedBox.shrink(),
+              isEvento && endereco.isNotEmpty
+                  ? Text(
+                      '\n$endereco, $data - $horario',
+                      style: const TextStyle(
+                        fontSize: 12,
+                        fontStyle:
+                            FontStyle.italic,
+                      ),
+                    )
+                  : const SizedBox.shrink(),
             ],
           ),
         ),

@@ -16,22 +16,22 @@ class WelcomePage extends StatelessWidget {
     final double buttonFontSize =
         (screenWidth * 0.045).clamp(16.0, 20.0);
     return Scaffold(
-      appBar:AppBar(
+      appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
         scrolledUnderElevation: 0,
         actions: [
-                CloseButton(
-                  onPressed: () {
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return const ConfirmPopUp();
-                      },
-                    );
-                  },
-                ),
-                ],
+          CloseButton(
+            onPressed: () {
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return const ConfirmPopUp();
+                },
+              );
+            },
+          ),
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(
@@ -80,9 +80,7 @@ class WelcomePage extends StatelessWidget {
                 onPressed: () {
                   Navigator.of(
                     context,
-                  ).pushNamed(
-                    '/presentation',
-                  );
+                  ).pushNamed('/presentation');
                 },
                 child: Text(
                   "Começar",
@@ -100,5 +98,3 @@ class WelcomePage extends StatelessWidget {
     );
   }
 }
-
-
