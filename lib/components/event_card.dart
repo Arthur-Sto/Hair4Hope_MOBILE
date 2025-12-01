@@ -209,7 +209,7 @@ class MoreInfoPopUp extends StatelessWidget {
               ),
               isEvento && endereco.isNotEmpty
                   ? Text(
-                      '\n$endereco, $data - $horario',
+                      '\n $endereco, $data - $horario',
                       style: const TextStyle(
                         fontSize: 12,
                         fontStyle:

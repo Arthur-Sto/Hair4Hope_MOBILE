@@ -68,6 +68,7 @@ flutter:
     - assets/images/fotohome.webp
     - assets/images/pontoscoleta_logo.png
     - assets/images/underdev.png
+    - assets/images/carrosel2.png
 
 flutter_launcher_icons:
   android: "launcher_icon"

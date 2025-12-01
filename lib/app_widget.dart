@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:iam_app/components/carrosel.dart';
 import 'package:iam_app/pages/collection_points_page.dart';
 import 'package:iam_app/pages/gallery_page.dart';
 import 'package:iam_app/pages/home_page.dart';
