@@ -2,12 +2,18 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:showcaseview/showcaseview.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class Carrosel extends StatelessWidget {
+class Carrosel extends StatefulWidget {
   const Carrosel({super.key});
 
+  @override
+  State<Carrosel> createState() => _CarroselState();
+}
+
+class _CarroselState extends State<Carrosel> {
   @override
   Widget build(BuildContext context) {
     final List<Widget> carouselitens = [
@@ -243,41 +249,41 @@ class Carrosel extends StatelessWidget {
         maxWidth:
             MediaQuery.sizeOf(context).width - 20,
       ),
-      child: CarouselView.weighted(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
-        ),
-        flexWeights: [1, 8, 1],
-        itemSnapping: true,
-        scrollDirection: Axis.horizontal,
-        controller: controller,
-        onTap: (index) {
-          switch (index) {
-            case 0:
-              showDialog(
-                context: context,
-                builder: (BuildContext context) {
-                  return const LearnHowDonatePopUp();
-                },
-              );
-            case 1:
-              showDialog(
-                context: context,
-                builder: (BuildContext context) {
-                  return const AmorimetroPopUp();
-                },
-              );
+      child:  CarouselView.weighted(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+          flexWeights: [1, 8, 1],
+          itemSnapping: true,
+          scrollDirection: Axis.horizontal,
+          controller: controller,
+          onTap: (index) {
+            switch (index) {
+              case 0:
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return const LearnHowDonatePopUp();
+                  },
+                );
+              case 1:
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return const AmorimetroPopUp();
+                  },
+                );
               case 2:
-              showDialog(
-                context: context,
-                builder: (BuildContext context) {
-                  return const GetHelpPopUp();
-                },
-              ); 
-          }
-        },
-        children: carouselitens,
-      ),
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return const GetHelpPopUp();
+                  },
+                );
+            }
+          },
+          children: carouselitens,
+        ),
     );
   }
 }
@@ -383,12 +389,8 @@ class LearnHowDonatePopUp
   @override
   Widget build(BuildContext context) {
     final List<Widget> carouselitens = [
-      Image.asset(
-        "assets/images/comodoar.png",
-      ),
-      Image.asset(
-        "assets/images/comodoar2.webp",
-      ),
+      Image.asset("assets/images/comodoar.png"),
+      Image.asset("assets/images/comodoar2.webp"),
     ];
 
     return SimpleDialog(
@@ -425,20 +427,26 @@ class GetHelpPopUp extends StatefulWidget {
   const GetHelpPopUp({super.key});
 
   @override
-  State<GetHelpPopUp> createState() => _GetHelpPopUpState();
+  State<GetHelpPopUp> createState() =>
+      _GetHelpPopUpState();
 }
 
-class _GetHelpPopUpState extends State<GetHelpPopUp> {
+class _GetHelpPopUpState
+    extends State<GetHelpPopUp> {
   late final WebViewController _controller;
   bool _isLoading = true;
 
   @override
   void initState() {
     super.initState();
-    
+
     _controller = WebViewController()
-      ..setJavaScriptMode(JavaScriptMode.unrestricted)
-      ..setBackgroundColor(const Color(0x00000000))
+      ..setJavaScriptMode(
+        JavaScriptMode.unrestricted,
+      )
+      ..setBackgroundColor(
+        const Color(0x00000000),
+      )
       ..setNavigationDelegate(
         NavigationDelegate(
           onPageFinished: (String url) {
@@ -448,25 +456,39 @@ class _GetHelpPopUpState extends State<GetHelpPopUp> {
               });
             }
           },
-          onNavigationRequest: (NavigationRequest request) {
-            
-            final isFormulario = request.url.contains('forms') || 
-                                 request.url.contains('google.com') ||
-                                 request.url.contains('typeform'); 
-            
-            if (isFormulario) {
-              launchUrl(
-                Uri.parse(request.url), 
-                mode: LaunchMode.externalApplication,
-              );
-              return NavigationDecision.prevent;
-            }
-            return NavigationDecision.navigate;
-          },
+          onNavigationRequest:
+              (NavigationRequest request) {
+                final isFormulario =
+                    request.url.contains(
+                      'forms',
+                    ) ||
+                    request.url.contains(
+                      'google.com',
+                    ) ||
+                    request.url.contains(
+                      'typeform',
+                    );
+
+                if (isFormulario) {
+                  launchUrl(
+                    Uri.parse(request.url),
+                    mode: LaunchMode
+                        .externalApplication,
+                  );
+                  return NavigationDecision
+                      .prevent;
+                }
+                return NavigationDecision
+                    .navigate;
+              },
         ),
       )
       // 2. Carrega a URL solicitada
-      ..loadRequest(Uri.parse('https://amoremmechas.com/quero-uma-peruca'));
+      ..loadRequest(
+        Uri.parse(
+          'https://amoremmechas.com/quero-uma-peruca',
+        ),
+      );
   }
 
   @override
@@ -483,23 +505,35 @@ class _GetHelpPopUpState extends State<GetHelpPopUp> {
           fontWeight: FontWeight.bold,
         ),
       ),
-      contentPadding: const EdgeInsets.all(0), // Remove padding padrão para aproveitar espaço
-      titlePadding: const EdgeInsets.fromLTRB(24, 24, 24, 10),
+      contentPadding: const EdgeInsets.all(
+        0,
+      ), // Remove padding padrão para aproveitar espaço
+      titlePadding: const EdgeInsets.fromLTRB(
+        24,
+        24,
+        24,
+        10,
+      ),
       children: [
         // 3. O WebView PRECISA de altura definida dentro de um Dialog
         SizedBox(
-          height: 400, // Altura da janela do navegador
-          width: double.maxFinite, // Largura máxima do dialog
+          height:
+              400, // Altura da janela do navegador
+          width: double
+              .maxFinite, // Largura máxima do dialog
           child: Stack(
             children: [
               // O Widget do WebView
-              WebViewWidget(controller: _controller),
-              
+              WebViewWidget(
+                controller: _controller,
+              ),
+
               // O Loading que aparece por cima
               if (_isLoading)
                 const Center(
                   child: CircularProgressIndicator(
-                    color: Colors.pink, // Mude para a cor do seu app
+                    color: Colors
+                        .pink, // Mude para a cor do seu app
                   ),
                 ),
             ],

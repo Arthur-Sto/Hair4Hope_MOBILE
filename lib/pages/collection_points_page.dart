@@ -1,9 +1,11 @@
 import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:iam_app/components/myappbar.dart';
 import 'package:iam_app/components/my_bottom_nav_bar.dart';
+import 'package:showcaseview/showcaseview.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class CollectionPointsPage
@@ -17,6 +19,18 @@ class CollectionPointsPage
 
 class _CollectionPointsPageState
     extends State<CollectionPointsPage> {
+
+  final List<GlobalKey> listinha = [
+    GlobalKey(),
+  ];
+
+  @override
+  void initState(){
+ShowcaseView.register(
+    );
+    super.initState();
+  }
+
   final _cepController = TextEditingController();
   final _numeroController =
       TextEditingController();
@@ -28,17 +42,31 @@ class _CollectionPointsPageState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const MyAppBar(
+      appBar: MyAppBar(
         titleText: 'Pontos de Coleta',
+        showcaseKeys: listinha,
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
-            SearchBar(
-              cepController: _cepController,
-              numeroController: _numeroController,
-              onSearch: _fetchPontosDeColeta,
+            Showcase(
+              key: listinha[0],
+              
+              title: 'Barra de Busca',
+              description:
+                  'Insira seu CEP e número de estabelecimento para encontrar pontos de coleta próximos.',
+                  descTextStyle: const TextStyle(
+                    fontWeight: FontWeight.normal,
+                    fontSize: 14,
+                  ),
+                 titleAlignment: AlignmentGeometry.topLeft,
+                 toolTipSlideEndDistance: 0,
+              child: SearchBar(
+                cepController: _cepController,
+                numeroController: _numeroController,
+                onSearch: _fetchPontosDeColeta,
+              ),
             ),
             const SizedBox(height: 20),
             Expanded(child: _buildResults()),
@@ -46,8 +74,7 @@ class _CollectionPointsPageState
         ),
       ),
       bottomNavigationBar: const MyBottomNavBar(
-        currentIndex:
-            0, // Esta é a página de Mapa (índice 0)
+        currentIndex: 0,
       ),
     );
   }

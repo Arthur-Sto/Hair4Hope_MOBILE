@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:showcaseview/showcaseview.dart';
 
 import 'package:iam_app/components/my_bottom_nav_bar.dart';
 import 'package:iam_app/components/myappbar.dart';
@@ -17,12 +18,24 @@ class GalleryPage extends StatefulWidget {
 class _GalleryPageState
     extends State<GalleryPage> {
   List<bool> isSelected = [true, false];
+final List<GlobalKey> listinha = [
+    GlobalKey(), //ToggleEvents
+    GlobalKey(), //GridGaleria
+  ];
+
+ @override
+  void initState(){
+    ShowcaseView.register(
+    );
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const MyAppBar(
+      appBar: MyAppBar(
         titleText: 'Galeria da Superação',
+        showcaseKeys: listinha,
       ),
       body: Padding(
         padding: const EdgeInsets.all(10.0),
@@ -30,29 +43,53 @@ class _GalleryPageState
           crossAxisAlignment: CrossAxisAlignment
               .start, // Alinha os filhos à esquerda
           children: [
-            ToggleAllOrEvent(
-              isSelected: isSelected,
-              onPressed: (index) {
-                setState(() {
-                  for (
-                    int i = 0;
-                    i < isSelected.length;
-                    i++
-                  ) {
-                    isSelected[i] = i == index;
-                  }
-                });
-              },
+            Showcase(
+              key: listinha[0],
+              title: 'Filtrar Itens',
+              description:
+                  'Use este botão para alternar entre ver todos os itens ou apenas eventos na galeria.',
+              descTextStyle: const TextStyle(
+                fontWeight: FontWeight.normal,
+                fontSize: 14,
+              ),
+              titleAlignment: AlignmentGeometry.topLeft,
+              toolTipSlideEndDistance: 0,
+              child: ToggleAllOrEvent(
+                isSelected: isSelected,
+                onPressed: (index) {
+                  setState(() {
+                    for (
+                      int i = 0;
+                      i < isSelected.length;
+                      i++
+                    ) {
+                      isSelected[i] = i == index;
+                    }
+                  });
+                },
+              ),
             ),
             const SizedBox(height: 20),
-            Expanded(
-              child: isSelected[0]
-                  ? const GalleryGrid(
-                      filterEvents: false,
-                    )
-                  : const GalleryGrid(
-                      filterEvents: true,
-                    ),
+            Showcase(
+              key: listinha[1],
+              title: 'Galeria de Fotos',
+              description:
+                  'Aqui estão as fotos e eventos compartilhados na nossa galeria da superação. Toque em qualquer imagem para ver mais detalhes!',
+                  descTextStyle: const TextStyle(
+                fontWeight: FontWeight.normal,
+                fontSize: 14,
+              ),
+              titleAlignment: AlignmentGeometry.topLeft,
+              toolTipSlideEndDistance: 0,
+              child: Expanded(
+                child: isSelected[0]
+                    ? const GalleryGrid(
+                        filterEvents: false,
+                      )
+                    : const GalleryGrid(
+                        filterEvents: true,
+                      ),
+              ),
             ),
           ],
         ),

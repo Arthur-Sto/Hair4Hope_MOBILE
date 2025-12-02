@@ -9,8 +9,8 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:iam_app/components/my_bottom_nav_bar.dart';
 import 'package:iam_app/components/myappbar.dart';
 import 'package:iam_app/components/event_card.dart';
+import 'package:showcaseview/showcaseview.dart';
 import 'package:iam_app/components/quick_access.dart';
-
 
 class NextEvent {
   final String titulo;
@@ -183,7 +183,10 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const MyAppBar(titleText: 'Início'),
+      appBar: const MyAppBar(
+        titleText: 'Início',
+        showcaseKeys: [],
+      ),
       body: Padding(
         padding: const EdgeInsets.symmetric(
           horizontal: 16.0,

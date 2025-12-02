@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:iam_app/components/UnderDev_pop_up.dart';
+import 'package:showcaseview/showcaseview.dart';
 
 class MyAppBar extends StatelessWidget
     implements PreferredSizeWidget {
   final String titleText;
+  final List<GlobalKey> showcaseKeys;
   const MyAppBar({
     super.key,
     required this.titleText,
+    required this.showcaseKeys,
   });
 
   @override
@@ -46,17 +49,13 @@ class MyAppBar extends StatelessWidget
             color: Colors.black87,
           ),
           onPressed: () {
-            switch (titleText) {
-              case 'Início':
-                print(titleText);
-                break;
-              case 'Pontos de Coleta':
-               print(titleText);
-                break;
-              case 'Galeria da Superação':
-                print(titleText);
-                break;
-            }
+                WidgetsBinding.instance
+                    .addPostFrameCallback(
+                      (_) => ShowcaseView.get()
+                          .startShowCase(
+                            showcaseKeys,
+                          ),
+                    );
           },
         ),
         IconButton(
