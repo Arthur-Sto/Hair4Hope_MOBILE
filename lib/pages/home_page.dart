@@ -65,9 +65,16 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   Future<NextEvent?>? _nextEventFuture;
+  final List<GlobalKey> listinha = [
+    GlobalKey(), //Carrosel
+    GlobalKey(), //Acessorapido
+    GlobalKey(), //eventofuruto
+  ];
 
   @override
   void initState() {
+    ShowcaseView.register(
+    );
     super.initState();
     initializeDateFormatting('pt_BR', null);
     _nextEventFuture = _fetchNextEvent();
@@ -183,9 +190,9 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const MyAppBar(
+      appBar: MyAppBar(
         titleText: 'Início',
-        showcaseKeys: [],
+        showcaseKeys: listinha,
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(
@@ -194,9 +201,29 @@ class _HomePageState extends State<HomePage> {
         child: ListView(
           children: [
             const SizedBox(height: 5),
-            Carrosel(),
+            Showcase(
+              key: listinha[0],
+              title: 'Carrosel de informações',
+              description: 'Role para ver banners, ao clicar em um banner, veja informações de como doar, como receber ajuda ou veja nosso amorímetro!',
+               descTextStyle: const TextStyle(
+                fontWeight: FontWeight.normal,
+                fontSize: 14,
+              ),
+              titleAlignment: AlignmentGeometry.topLeft,
+              toolTipSlideEndDistance: 0,
+              child: Carrosel()),
             const SizedBox(height: 8),
-            const QuickAcess(),
+            Showcase(
+               key: listinha[1],
+              title: 'Acesso rápido',
+              description: 'Nesta área você pode acessar rapidamente as principais funções do app!',
+               descTextStyle: const TextStyle(
+                fontWeight: FontWeight.normal,
+                fontSize: 14,
+              ),
+              titleAlignment: AlignmentGeometry.topLeft,
+              toolTipSlideEndDistance: 0,
+              child: const QuickAcess()),
             const SizedBox(height: 25),
             const Text(
               'Próximo Evento',
@@ -205,7 +232,17 @@ class _HomePageState extends State<HomePage> {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            _buildEventSection(),
+            Showcase(
+               key: listinha[2],
+              title: 'Próximo Evento',
+              description: 'Acompanhe o próximo evento promovido pela ONG! (Clique no card para ver mais)',
+               descTextStyle: const TextStyle(
+                fontWeight: FontWeight.normal,
+                fontSize: 14,
+              ),
+              titleAlignment: AlignmentGeometry.topLeft,
+              toolTipSlideEndDistance: 0,
+              child: _buildEventSection()),
           ],
         ),
       ),
